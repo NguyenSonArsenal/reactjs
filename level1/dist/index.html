@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Setup React</title>
+</head>
+<body>
+
+<div class="wrapper">
+    <h3 style="text-align: center">App FlashRadioSwitch</h3>
+    <div class="label on">
+        <p>Label On</p>
+        <input class="inputLabel" type="text" placeholder="Enter label On"/>
+    </div>
+    <div class="label off">
+        <p>Label Off</p>
+        <input class="inputLabel" type="text" placeholder="Enter label Off" />
+    </div>
+
+    <div class="control">
+        <div class="label left">Left</div>
+        <div class="label right">Right</div>
+    </div>
+
+    <br>
+    <br>
+    <h1 id="test"></h1>
+</div>
+
+<script src="bundle.js"></script>
+</body>
+</html>
