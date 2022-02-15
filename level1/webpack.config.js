@@ -1,22 +1,30 @@
-const path = require('path');
+var webpack = require('webpack');
+var path = require('path');
 
-module.exports = {
-    mode: 'development',
-    entry: './src/js/index.js',
+var BUILD_DIR = path.resolve(__dirname, 'build');
+var APP_DIR = path.resolve(__dirname, 'src');
+
+var config = {
+    entry: APP_DIR + '/index.jsx',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
+        path: BUILD_DIR,
+        filename: 'bundle.js'
     },
-    watch: true,
     module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
+        rules: [{
+            test: /.jsx?$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/,
+            options: {
+                presets: [
+                    "@babel/preset-env",
+                    "@babel/preset-react"
                 ]
             }
-        ]
+        }],
     },
+    watch: true,
+    mode: 'development',
 };
+
+module.exports = config;
