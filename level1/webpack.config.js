@@ -11,17 +11,23 @@ var config = {
         filename: 'bundle.js'
     },
     module: {
-        rules: [{
-            test: /.jsx?$/,
-            loader: 'babel-loader',
-            exclude: /node_modules/,
-            options: {
-                presets: [
-                    "@babel/preset-env",
-                    "@babel/preset-react"
-                ]
-            }
-        }],
+        rules: [
+            {
+                test: /.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                options: {
+                    presets: [
+                        "@babel/preset-env",
+                        "@babel/preset-react"
+                    ]
+                }
+            },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
+        ],
     },
     watch: true,
     mode: 'development',
