@@ -37,5 +37,5 @@ let initialSkillsState = [
 ];
 
 export const skillReducer = (state = initialSkillsState, action) => {
-    return { ... state };
+    return { state };
 }

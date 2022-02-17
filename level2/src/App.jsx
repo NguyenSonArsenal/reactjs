@@ -1,74 +1,45 @@
 import React from "react";
 import {connect} from "react-redux";
-import logo from './logo.svg';
 
-const mapStateToProps = state => ({
-    skills: state.skillReducer
+const mapStateToProps = store => ({
+    skills: store.skillReducer.state
 });
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            skills: props.skills,
-        }
     }
 
     render() {
-        let clone = [...this.state.skills];
         return (
             <div className="wrapper">
                 <div className="choose-timezone">
                     <span>Timezone: </span>
                     <input type="radio" name="timezone" value="" id="Asia/Tokyo"/>
-                    <label for="Asia/Tokyo">Tokio</label>
-                    <input type="radio" name="timezone" value="" id="Asia/HaNoi" checked/>
-                    <label for="Asia/HaNoi">Ha Noi</label>
+                    <label htmlFor="Asia/Tokyo">Tokio</label>&nbsp;&nbsp;
+                    <input type="radio" name="timezone" value="" id="Asia/HaNoi" defaultChecked/>
+                    <label htmlFor="Asia/HaNoi">Ha Noi</label>&nbsp;&nbsp;
                     <input type="radio" name="timezone" value="" id="Asia/London"/>
-                    <label for="Asia/London">London</label>
+                    <label htmlFor="Asia/London">London</label>
                 </div>
                 <div className="list-control">
-                    {clone.map((value, index) => {
-                        <div className="control">
-                            <div className="thumb-avatar">
-                                <img src='./images/1.jpg' alt="image name"/>
-                            </div>
-                            <div className="extends">
-                                <div style={{fontWeight: 'bold'}}>One</div>
-                                <div className="title">
-                                    <span className="max-character-length">If you have a bad day, catch a wave </span>
-                                    <a className="edit" href="#">Edit</a>
+                    {
+                        this.props.skills.map(item => (
+                            <div className="control" key={item.id}>
+                                <div className="thumb-avatar">
+                                    <img src={item.avatar} alt="image name"/>
                                 </div>
-                                <time dateTime="1504233072000">September 01, 2017 09:31 AM</time>
+                                <div className="extends">
+                                    <div style={{fontWeight: 'bold'}}>{item.name}</div>
+                                    <div className="title">
+                                        <span className="max-character-length">{item.tagline}&nbsp;&nbsp;</span>
+                                        <a className="edit" href="#">Edit</a>
+                                    </div>
+                                    <time dateTime="1504233072000">September 01, 2017 09:31 AM</time>
+                                </div>
                             </div>
-                        </div>
-                    })}
-                    <div className="control">
-                        <div className="thumb-avatar">
-                            <img src='./images/1.jpg' alt="image name"/>
-                        </div>
-                        <div className="extends">
-                            <div style={{fontWeight: 'bold'}}>One</div>
-                            <div className="title">
-                                <span className="max-character-length">If you have a bad day, catch a wave </span>
-                                <a className="edit" href="#">Edit</a>
-                            </div>
-                            <time dateTime="1504233072000">September 01, 2017 09:31 AM</time>
-                        </div>
-                    </div>
-                    <div className="control">
-                        <div className="thumb-avatar">
-                            <img src='./images/1.jpg' alt="image name"/>
-                        </div>
-                        <div className="extends">
-                            <div style={{fontWeight: 'bold'}}>One</div>
-                            <div className="title">
-                                <span className="max-character-length">If you have a bad day, catch a wave </span>
-                                <a className="edit" href="#">Edit</a>
-                            </div>
-                            <time dateTime="1504233072000">September 01, 2017 09:31 AM</time>
-                        </div>
-                    </div>
+                        ))
+                    }
                 </div>
                 <div className="control-arrange">
                     <div className="btn-arrange" id="asc">Ascending Time</div>
