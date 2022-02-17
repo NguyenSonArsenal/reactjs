@@ -1,0 +1,50 @@
+.wrapper {
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  width: 450px;
+}
+
+.control {
+  display: flex;
+  justify-content: space-between;
+  height: 35px;
+  line-height: 35px;
+  margin-top: 30px;
+}
+
+.control .label {
+  border: 1px solid #00e1df;
+  width: 48%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.control .label:hover {
+  cursor: pointer;
+}
+
+.inputLabel {
+  width: 440px;
+  height: 25px;
+  padding-left: 10px;
+}
+
+.inputLabel:focus {
+  border: 1px solid #00e1df;
+  outline: none !important;
+}
+
+.label p {
+  font-weight: bold;
+}
+
+.bgGreen {
+  background: #00e1df;
+}
+.bgOn {
+  background: #00e1df;
+}
