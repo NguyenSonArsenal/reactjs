@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import moment from 'moment-timezone';
 
 const mapStateToProps = store => ({
     skills: store.skillReducer.state
@@ -35,7 +36,7 @@ class App extends React.Component {
                                         <span className="max-character-length">{item.tagline}&nbsp;&nbsp;</span>
                                         <a className="edit" href="#">Edit</a>
                                     </div>
-                                    <time dateTime="1504233072000">September 01, 2017 09:31 AM</time>
+                                    <time>{moment(item.date_added).tz('Asia/Tokyo').format('DD-MM-YYYY LTS')}</time>
                                 </div>
                             </div>
                         ))
