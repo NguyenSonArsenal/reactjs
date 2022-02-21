@@ -11,7 +11,9 @@ class App extends React.Component {
         super(props);
         this.state = {
             timeZone: 'Asia/Ho_Chi_Minh',
-            skills: this.props.skills
+            skills: this.props.skills,
+            isShowInputForm: false,
+            idActiveInputForm: -1,
         }
     }
 
@@ -37,6 +39,39 @@ class App extends React.Component {
         })
     }
 
+    handleCancel(e) {
+        this.props.skills.onChange(e);
+        this.setState({
+            isShowInputForm: false
+        });
+    }
+
+    handleSave(id, e) {
+        this.props.dispatch({
+            type: 'EDIT_TAGLINE',
+            id: id
+        })
+        // this.props.onChange(id);
+    }
+
+    showAvatarBlurb(id, e) {
+        this.setState({
+            isShowInputForm: true,
+            idActiveInputForm: id,
+        })
+    }
+
+    changeInputName(e) {
+        let value = e.target.value;
+        console.log(value)
+    }
+
+    moveCaretAtEnd(e) {
+        var temp_value = e.target.value + ' '
+        e.target.value = ''
+        e.target.value = temp_value
+    }
+
     render() {
         return (
             <div className="wrapper">
@@ -56,17 +91,36 @@ class App extends React.Component {
                 <div className="list-control">
                     {
                         this.state.skills.map(item => (
-                            <div className="control" key={item.id}>
-                                <div className="thumb-avatar">
-                                    <img src={item.avatar} alt="image name"/>
-                                </div>
-                                <div className="extends">
-                                    <div style={{fontWeight: 'bold'}}>{item.name}</div>
-                                    <div className="title">
-                                        <span className="max-character-length">{item.tagline}&nbsp;&nbsp;</span>
-                                        <a className="edit" href="#">Edit</a>
+                            <div className='item' key={item.id}>
+                                <div className="control">
+                                    <div className="thumb-avatar">
+                                        <img src={item.avatar} alt="image name"/>
                                     </div>
-                                    <time>{moment(item.date_added).tz(this.state.timeZone).format('DD-MM-YYYY LTS')}</time>
+                                    <div className="extends">
+                                        <div style={{fontWeight: 'bold'}}>{item.name}</div>
+                                        <div className="title">
+                                            <span className="max-character-length">{item.tagline}&nbsp;&nbsp;</span>
+                                            <a className="edit" href="#" onClick={(e) => this.showAvatarBlurb(item.id, e)}>Edit</a>
+                                        </div>
+                                        <time>{moment(item.date_added).tz(this.state.timeZone).format('DD-MM-YYYY LTS')}</time>
+                                    </div>
+                                </div>
+
+                                <div className="inline-editor" style={{ display: (this.state.isShowInputForm && this.state.idActiveInputForm == item.id) ? 'block' : 'none'}}>
+                                    <div className="editor">
+                                        <input type="text"
+                                               ref={(input) => {input && input.focus()}}
+                                               className="input-editor"
+                                               onChange={this.changeInputName.bind(this)}
+                                               defaultValue={item.tagline}
+                                               autoFocus
+                                               onFocus={this.moveCaretAtEnd}
+                                        />
+                                    </div>
+                                    <div className="control-edit">
+                                        <div className="btn-control margin-left" onClick={this.handleCancel.bind(this)}>Cancel</div>
+                                        <div className="btn-control btn-save" onClick={() => this.handleSave(item.id)}>Save</div>
+                                    </div>
                                 </div>
                             </div>
                         ))

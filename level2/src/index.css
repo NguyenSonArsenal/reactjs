@@ -21,6 +21,9 @@ code {
 .control {
   display: flex;
   align-items: center;
+}
+
+.item {
   margin-bottom: 15px;
 }
 
@@ -64,4 +67,38 @@ code {
   width: 120px;
   margin-right: 5px;
   text-align: center;
+}
+
+.inline-editor {
+  padding: 3px;
+}
+.inline-editor .editor {
+  margin: 15px 0 10px;
+}
+.inline-editor .editor .input-editor {
+  height: 25px;
+  max-width: 355px;
+  width: 98%;
+}
+.inline-editor .control-edit {
+  display: inline-flex;
+  max-width: 355px;
+  width: 100%;
+}
+.inline-editor .control-edit .btn-control {
+  cursor: pointer;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 13px;
+  width: 60px;
+  margin-right: 5px;
+  text-align: center;
+  float: right;
+}
+.inline-editor .control-edit .margin-left {
+  margin-left: 55%;
+  background: #adacac;
+}
+.inline-editor .control-edit .btn-save {
+  background: #028cff;
 }
