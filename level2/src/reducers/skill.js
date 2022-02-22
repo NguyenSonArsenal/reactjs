@@ -39,14 +39,19 @@ let initialSkillsState = [
 export const skillReducer = (state = initialSkillsState, action) => {
     switch (action.type) {
         case 'EDIT_TAGLINE':
-            let newList = initialSkillsState.map(item => (
-                item.id === action.id ? {...item, tagline: 'xxx'}: item
+            return state.map(item => (
+                item.id === action.id ? {...item, tagline: action.tagLine} : item
             ))
-
-            // console.log(newList) // run ok
-            // return {newList}
-
+        case 'SORT':
+            let newSkills;
+            let column = action.column;
+            if (action.sortType == 'asc') {
+                newSkills = [].concat(state).sort((a, b) => a[column] >= b[column] ? 1 : -1);
+            } else {
+                newSkills = [].concat(state).sort((a, b) => a[column] < b[column] ? 1 : -1);
+            }
+            return newSkills;
         default:
-            return {state}
+            return state
     }
 };

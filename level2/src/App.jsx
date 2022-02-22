@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import moment from 'moment-timezone';
 
 const mapStateToProps = store => ({
-    skills: store.skillReducer.state
+    skills: store.skillReducer
 });
 
 class App extends React.Component {
@@ -11,9 +11,9 @@ class App extends React.Component {
         super(props);
         this.state = {
             timeZone: 'Asia/Ho_Chi_Minh',
-            skills: this.props.skills,
             isShowInputForm: false,
             idActiveInputForm: -1,
+            inputTmp: '',
         }
     }
 
@@ -24,50 +24,50 @@ class App extends React.Component {
     }
 
     sort(e) {
-        let newSkills = [];
-        let sortType = e.target.getAttribute('data-sort-type');
-        let column = e.target.getAttribute('data-column');
-
-        if (sortType == 'asc') {
-            newSkills = [].concat(this.state.skills).sort((a, b) => a[column] >= b[column] ? 1 : -1);
-        } else {
-            newSkills = [].concat(this.state.skills).sort((a, b) => a[column] < b[column] ? 1 : -1);
-        }
-
-        this.setState({
-            skills: newSkills
+        this.props.dispatch({
+            type: 'SORT',
+            sortType: e.target.getAttribute('data-sort-type'),
+            column: e.target.getAttribute('data-column'),
         })
     }
 
     handleCancel(e) {
-        this.props.skills.onChange(e);
-        this.setState({
-            isShowInputForm: false
-        });
+        this._clearState();
     }
 
     handleSave(id, e) {
         this.props.dispatch({
             type: 'EDIT_TAGLINE',
-            id: id
+            id: id,
+            tagLine: this.state.inputTmp
         })
-        // this.props.onChange(id);
+        this._clearState();
     }
 
-    showAvatarBlurb(id, e) {
+    _clearState() {
+        this.setState({
+            isShowInputForm: false,
+            inputTmp: ''
+        });
+    }
+
+    showAvatarBlurb(item, e) {
+        console.log(item)
         this.setState({
             isShowInputForm: true,
-            idActiveInputForm: id,
+            idActiveInputForm: item.id,
+            inputTmp: item.tagline,
         })
     }
 
     changeInputName(e) {
-        let value = e.target.value;
-        console.log(value)
+        this.setState({
+            inputTmp: e.target.value
+        })
     }
 
     moveCaretAtEnd(e) {
-        var temp_value = e.target.value + ' '
+        var temp_value = e.target.value
         e.target.value = ''
         e.target.value = temp_value
     }
@@ -90,7 +90,7 @@ class App extends React.Component {
                 </div>
                 <div className="list-control">
                     {
-                        this.state.skills.map(item => (
+                        this.props.skills.map(item => (
                             <div className='item' key={item.id}>
                                 <div className="control">
                                     <div className="thumb-avatar">
@@ -100,7 +100,7 @@ class App extends React.Component {
                                         <div style={{fontWeight: 'bold'}}>{item.name}</div>
                                         <div className="title">
                                             <span className="max-character-length">{item.tagline}&nbsp;&nbsp;</span>
-                                            <a className="edit" href="#" onClick={(e) => this.showAvatarBlurb(item.id, e)}>Edit</a>
+                                            <a className="edit" href="#" onClick={(e) => this.showAvatarBlurb(item, e)}>Edit</a>
                                         </div>
                                         <time>{moment(item.date_added).tz(this.state.timeZone).format('DD-MM-YYYY LTS')}</time>
                                     </div>
