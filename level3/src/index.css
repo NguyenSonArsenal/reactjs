@@ -14,24 +14,31 @@ code {
 
 .wrapper {
     border: 1px solid #ccc;
-    max-width: 355px;
+    max-width: 500px;
     padding: 15px;
     margin: 30px auto;
 }
 
-.content {
-    overflow: hidden;
+textarea {
+    width: 100%;
+}
+
+.component {
+    margin-bottom: 30px;
+}
+
+.component .content {
     line-height: 1.2em;
-    height: 3.6em;
-}
-
-.content.collapsed {
     overflow: hidden;
-    transition: opacity 200ms;
+    white-space: pre-line;
+    -webkit-mask-image: linear-gradient(180deg,#000 60%,transparent);
+    text-overflow: ellipsis;
 }
 
-.content.expanded {
-    overflow: visible;
-    height: auto;
-    transition: opacity 200ms;
+.collapsed {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* number of lines to show */
+    -webkit-box-orient: vertical;
 }
