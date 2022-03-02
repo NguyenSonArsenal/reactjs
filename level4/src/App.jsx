@@ -1,6 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import moment from 'moment-timezone';
+import "bootstrap/dist/css/bootstrap.min.css";
+import CreateSkill from './component/CreateSkill'
 
 const mapStateToProps = store => ({
     skills: store.skillReducer
@@ -15,6 +17,7 @@ class App extends React.Component {
             idActiveInputForm: -1,
             inputTmp: '',
             btnControlActive: '',
+            isShowFormCreateSkill: false,
         }
     }
 
@@ -83,6 +86,11 @@ class App extends React.Component {
     render() {
         return (
             <div className="wrapper">
+                <div className="create-skill mb-3">
+                    <button className="btn btn-primary btn-sm" onClick={ () => this.setState({isShowFormCreateSkill: !this.state.isShowFormCreateSkill})  }>Add</button>
+                    {this.state.isShowFormCreateSkill && <CreateSkill />}
+                </div>
+
                 <div className="choose-timezone">
                     <span>Timezone: </span>
                     <input type="radio" name="timezone" value="" id="Asia/Tokyo" onChange={this.changeTimeZone.bind(this)}/>
