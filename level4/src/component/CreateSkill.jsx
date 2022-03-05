@@ -2,16 +2,17 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { Field, reduxForm } from 'redux-form'
 import ErrorValidation from "./ErrorValidation";
+import {connect} from 'react-redux';
 
 class CreateSkill extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name : '',
-            tagline : '',
-            date_added : '',
+            tagLine : '',
+            dateAdded : '',
             errorsValidate: {},
-        }
+        };
     }
 
     changeInputValue(e) {
@@ -25,7 +26,14 @@ class CreateSkill extends React.Component {
         let errorValidate = this.validationForm();
 
         if (Object.keys(errorValidate).length == 0) {
-            alert("Form submitted");
+            this.props.dispatch({
+                type: 'STORE',
+                payload: {
+                    name: this.state.name,
+                    tagLine: this.state.tagLine,
+                    dateAdded: this.state.dateAdded
+                }
+            });
         }
     }
 
@@ -36,12 +44,12 @@ class CreateSkill extends React.Component {
             errorsValidate.name = "Trường tên là bắt buộc nhập";
         }
 
-        if (!this.state.tagline) {
-            errorsValidate.tagline = "Trường tag-line là bắt buộc nhập";
+        if (!this.state.tagLine) {
+            errorsValidate.tagLine = "Trường tag-line là bắt buộc nhập";
         }
 
-        if (!this.state.date_added) {
-            errorsValidate.date_added = "Trường date là bắt buộc nhập";
+        if (!this.state.dateAdded) {
+            errorsValidate.dateAdded = "Trường date là bắt buộc nhập";
         }
 
         this.setState({errorsValidate});
@@ -62,12 +70,12 @@ class CreateSkill extends React.Component {
                         <input type="text" name="name" className="form-control" placeholder="Please enter name" onChange={e => this.changeInputValue(e)}/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="tagline" className="form-label">Tag line (*)</label>
-                        <input type="text" name="tagline" className="form-control" placeholder="Please enter tagline" onChange={e => this.changeInputValue(e)}/>
+                        <label htmlFor="tagLine" className="form-label">Tag line (*)</label>
+                        <input type="text" name="tagLine" className="form-control" placeholder="Please enter tag line" onChange={e => this.changeInputValue(e)}/>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="date_added" className="form-label">Date (*)</label>
-                        <input type="date" name="date_added" className="form-control" onChange={e => this.changeInputValue(e)}/>
+                        <label htmlFor="dateAdded" className="form-label">Date (*)</label>
+                        <input type="date" name="dateAdded" className="form-control" onChange={e => this.changeInputValue(e)}/>
                     </div>
                     <div className="col-12">
                         <button className="btn btn-primary btn-sm mr-1" type="submit">
@@ -83,5 +91,6 @@ class CreateSkill extends React.Component {
     }
 }
 
-export default CreateSkill;
+const mapStateReduxToPropsComponent = () => ({});
+export default connect(mapStateReduxToPropsComponent)(CreateSkill);
 

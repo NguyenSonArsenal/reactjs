@@ -30,8 +30,10 @@ class App extends React.Component {
     sort(e, btnControl){
         this.props.dispatch({
             type: 'SORT',
-            sortType: e.target.getAttribute('data-sort-type'),
-            column: e.target.getAttribute('data-column'),
+            payload: {
+                sortType: e.target.getAttribute('data-sort-type'),
+                column: e.target.getAttribute('data-column'),
+            },
         });
         this.setState({
             btnControlActive: btnControl
@@ -47,11 +49,27 @@ class App extends React.Component {
         this._clearState();
     }
 
-    handleSave(id) {
+    showAvatarBlurb(item, e) {
+        this.setState({
+            isShowInputForm: true,
+            idActiveInputForm: item.id,
+            inputTmp: item.tagLine,
+        })
+    }
+
+    handleOnChangeInputTagLine(e) {
+        this.setState({
+            inputTmp: e.target.value
+        })
+    }
+
+    updateTagLine(id) {
         this.props.dispatch({
-            type: 'EDIT_TAGLINE',
-            id: id,
-            tagLine: this.state.inputTmp
+            type: 'UPDATE_TAG_LINE',
+            payload: {
+                id: id,
+                tagLine: this.state.inputTmp
+            }
         });
         this._clearState();
     }
@@ -63,23 +81,9 @@ class App extends React.Component {
         });
     }
 
-    showAvatarBlurb(item, e) {
-        this.setState({
-            isShowInputForm: true,
-            idActiveInputForm: item.id,
-            inputTmp: item.tagline,
-        })
-    }
-
-    changeInputName(e) {
-        this.setState({
-            inputTmp: e.target.value
-        })
-    }
-
     moveCaretAtEnd(e) {
-        var temp_value = e.target.value
-        e.target.value = ''
+        let temp_value = e.target.value;
+        e.target.value = '';
         e.target.value = temp_value
     }
 
@@ -115,10 +119,10 @@ class App extends React.Component {
                                     <div className="extends">
                                         <div style={{fontWeight: 'bold'}}>{item.name}</div>
                                         <div className="title">
-                                            <span className="max-character-length">{item.tagline}&nbsp;&nbsp;</span>
+                                            <span className="max-character-length">{item.tagLine}&nbsp;&nbsp;</span>
                                             <a className="edit" href="#" onClick={(e) => this.showAvatarBlurb(item, e)}>Edit</a>
                                         </div>
-                                        <time>{moment(item.date_added).tz(this.state.timeZone).format('DD-MM-YYYY LTS')}</time>
+                                        <time>{moment(item.dateAdded).tz(this.state.timeZone).format('DD-MM-YYYY LTS')}</time>
                                     </div>
                                 </div>
 
@@ -127,15 +131,15 @@ class App extends React.Component {
                                         <input type="text"
                                                ref={(input) => {input && input.focus()}}
                                                className="input-editor"
-                                               onChange={this.changeInputName.bind(this)}
-                                               defaultValue={item.tagline}
+                                               onChange={this.handleOnChangeInputTagLine.bind(this)}
+                                               defaultValue={item.tagLine}
                                                autoFocus
                                                onFocus={this.moveCaretAtEnd}
                                         />
                                     </div>
                                     <div className="control-edit">
                                         <div className="btn-control margin-left" onClick={this.handleCancel.bind(this)}>Cancel</div>
-                                        <div className="btn-control btn-save" onClick={() => this.handleSave(item.id)}>Save</div>
+                                        <div className="btn-control btn-save" onClick={() => this.updateTagLine(item.id)}>Save</div>
                                     </div>
                                 </div>
                             </div>
@@ -143,8 +147,8 @@ class App extends React.Component {
                     }
                 </div>
                 <div className="control-arrange">
-                    <div className={`btn-arrange ${this.isActive('time_asc')}`} data-sort-type="asc" data-column="date_added" onClick={(e) => this.sort(e,  'time_asc')}>Ascending Time</div>
-                    <div className={`btn-arrange ${this.isActive('time_des')}`} data-sort-type="desc" data-column="date_added" onClick={(e) => this.sort(e,  'time_des')}>Descending Time</div>
+                    <div className={`btn-arrange ${this.isActive('time_asc')}`} data-sort-type="asc" data-column="dateAdded" onClick={(e) => this.sort(e,  'time_asc')}>Ascending Time</div>
+                    <div className={`btn-arrange ${this.isActive('time_des')}`} data-sort-type="desc" data-column="dateAdded" onClick={(e) => this.sort(e,  'time_des')}>Descending Time</div>
                 </div>
                 <div className="control-arrange">
                     <div className={`btn-arrange ${this.isActive('name_asc')}`} data-sort-type="asc" data-column="name" onClick={(e) => this.sort(e,  'name_asc')}>Ascending Name</div>
