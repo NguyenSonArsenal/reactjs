@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Destructuring, Rest parameter và Spread Syntax</h1>
+<div>==========================</div>
+<h3>&nbsp;&nbsp;&nbsp; 1. Destructuring: Phá vỡ cấu trúc, phân rã</h3>
+<ul>
+    <li>Định nghĩa: Phân ra mảng or đối tượng ra từng phần tử riêng lẻ</li>
+    <li>Chỉ áp dụng với mảng và đối tượng</li>
+    <li>Phân rã dạng nào thì biến tạo ra cũng phải dạng đó </li>
+</ul>
+<div>==========================</div>
+<h3>&nbsp;&nbsp;&nbsp; 2. Rest parameter: (...) Gom lại </h3>
+<ul>
+    <li>Định nghĩa: Được kí hiệu bởi dấu ...</li>
+    <li>Cách dùng:
+        <ul>
+            <li>Dùng với destructuring</li>
+            <li>Dùng với tham số trong định nghĩa function</li>
+        </ul>
+    </li>
+    <li>Phần tử rest phải là phần tử cuối cùng</li>
+</ul>
+
+<div>==========================</div>
+<h3>&nbsp;&nbsp;&nbsp; 3. Spread Syntax (...) </h3>
+<ul>
+    <li>Bỏ 2 dấu ngoặc đầu và cuối của mảng và đối tượng đi, chỉ lấy giá trị phần tử bên trong</li>
+    <li>Cách dùng:
+        <ul>
+            <li>Dùng với mảng</li>
+            <li>Dùng với đối tượng</li>
+            <li>Gọi đến hàm và truyền đối số</li>
+        </ul>
+    </li>
+</ul>
+
+</body>
+</html>
+
+<script>
+  // Destructuring + rest
+    const arr = ["Tu", "hoc", "javascript", "co", "ban"];
+    const [a, b, ...rest] = arr;
+    // console.log(a, b, rest);
+
+    const obj = {
+      name: "nguyen son",
+      old: 18,
+      gender: "boy",
+      children: {
+        name: "arsenal",
+        old: 20
+      }
+    }
+
+    // const {name: parentName, old, ...res} = obj
+    // console.log(parentName, old, res)
+
+  // Spread Syntax
+  // C1
+  var arr1 = [1,2,3]
+  var arr2 = [2,4,6]
+  var arr3 = [...arr1, ...arr2]
+  console.log(arr3);
+
+    // C2
+  var obj1 = {a: 1, b: 2, c: 3}
+  var obj2 = {a: 2, d: 4, c: 6}
+  var obj3 = {...obj1, ...obj2}
+  console.log(obj3);
+
+  // C3
+  var array = ['js', 'php', 'reactjs']
+
+  function logger(...rest) { // rest parameter
+    for (i = 0; i < rest.length; i++) {
+      console.log(rest[i])
+    }
+  }
+  logger(...array) // Spread Syntax
+</script>
